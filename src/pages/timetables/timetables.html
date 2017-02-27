@@ -1,0 +1,72 @@
+<!--
+  Generated template for the Timetables page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Bus Stop Information</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content style="background-color: lightgray" padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingText="Updating Bus Due Times"></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card>
+    <ion-card-header style="white-space: normal">
+      <ion-grid >
+        <ion-row>
+          <ion-col width-33>
+            <p>Stop ID:</p>
+          </ion-col>
+           <ion-col>
+            <p>{{busStop.stopid}}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row >
+          <ion-col width-33>
+            <p>Name:</p>
+          </ion-col>
+          <ion-col>
+            <p>{{busStop.name}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="bussesDueFive[0].operators.routes.length > 0">
+      <!-- TODO: only show timetables if busses are due -->
+      <ion-grid >
+
+        <ion-row center style="text-decoration: underline">
+          <ion-col>Route</ion-col>
+          <ion-col>Destination</ion-col>
+          <ion-col style="text-align: right">Due</ion-col>
+        </ion-row>
+
+        <ion-row center *ngFor="let bus of bussesDueFive">
+          <ion-col *ngIf="bus.operators">{{bus.route}}</ion-col>
+          <ion-col>{{bus.destination}}</ion-col>
+          <ion-col style="text-align: right">{{bus.duetime}}</ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <br/>
+  <ion-grid text-center>
+    <ion-row>
+      <ion-col>
+        <button ion-button center outline color="dark" (click)="navigate()">Navigate to Busstop</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

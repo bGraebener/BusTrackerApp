@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Bus Stop Finder
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background-color: lightgray" padding>
+
+  <ion-card style="text-align: center">
+    <ion-card-header><strong>Welcome</strong></ion-card-header>
+    <ion-card-content>
+      <p style="font-size: 75%">Search for bus stops by name or proximity. Choose a bus stop from the search results.
+         This will show you the next five busses that are due. You can let your phones' navigation app show you the 
+         way to nearest bus stop.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <br/>
+  <ion-card >
+    <ion-input  type="text" placeholder="Enter Bus Stop Name" [(ngModel)]="stopName"></ion-input>
+    <button ion-button block clear small color="dark"  (click)="searchByName()">Search Bus Stop</button>
+  </ion-card>
+
+ 
+  <br/>
+  <ion-card>
+    <ion-item>
+      <ion-range size="75%" min="5" max="20" snaps="true" pin="true" step="5" [(ngModel)]="numOfStops">
+        <ion-label range-left>5</ion-label>
+        <ion-label range-right>20</ion-label>
+      </ion-range>
+    </ion-item>
+    <br/>
+    <button ion-button clear block small color="dark" (click)="computeDistance()">Find The {{numOfStops}} Closest Bus Stops</button>
+  </ion-card>
+</ion-content>
