@@ -40,7 +40,7 @@
       </ion-grid>
     </ion-card-header>
 
-    <ion-card-content *ngIf="bussesDueFive[0].operators.routes.length > 0">
+    <ion-card-content>
       <!-- TODO: only show timetables if busses are due -->
       <ion-grid >
 
@@ -51,7 +51,7 @@
         </ion-row>
 
         <ion-row center *ngFor="let bus of bussesDueFive">
-          <ion-col *ngIf="bus.operators">{{bus.route}}</ion-col>
+          <ion-col >{{bus.route}}</ion-col>
           <ion-col>{{bus.destination}}</ion-col>
           <ion-col style="text-align: right">{{bus.duetime}}</ion-col>
         </ion-row>
