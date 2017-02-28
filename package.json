@@ -37,7 +37,8 @@
     "cordova-plugin-console",
     "cordova-plugin-device",
     "ionic-plugin-keyboard",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-crosswalk-webview"
   ],
   "cordovaPlatforms": [],
   "description": "BusTracker: An Ionic project"
