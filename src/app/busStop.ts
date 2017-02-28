@@ -1,6 +1,5 @@
 //
 
-
 export class BusStop {
     stopid: string;
     latitude: string;
@@ -9,7 +8,7 @@ export class BusStop {
     distance: number;
     operators: any[];
 
-
+   
     constructor(latitude: string, longitude: string, stopid: string, name: string, operators: any[]) {
         this.latitude = latitude;
         this.longitude = longitude;
@@ -43,4 +42,5 @@ export class BusStop {
         this.distance = R * c / 1000;
         return this.distance;
     }
+
 }

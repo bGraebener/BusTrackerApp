@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Slides } from 'ionic-angular';
 import { BusStop } from '../../app/busStop';
 import { TimetablesPage } from '../timetables/timetables';
 import { Times } from '../../providers/times';
@@ -11,25 +11,43 @@ import { Navigator } from '../../providers/navigator';
 })
 export class SearchResultsPage {
 
-  stops: BusStop[];
+  @ViewChild(Slides) slides: Slides;
+
+  busStopArray: BusStop[];
+  bussesDue: any;
+  bussesDueFive: BusStop[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private times: Times) {
 
-    this.stops = this.navParams.get('stops');
+    this.busStopArray = this.navParams.get('busStopArray');
   }
 
   ionViewDidLoad() {
+    let current = this.slides.getActiveIndex();
+    console.log(current);
+  }
+
+  showTimeTable(){
+    let current = this.slides.getActiveIndex();
+    console.log(current);
   }
 
   //function to retrieve data about a specific bus stop
   showTimetable(stop: BusStop) {
 
     this.times.getTimeTable(stop.stopid).subscribe(res => {
-      this.navCtrl.push(TimetablesPage, { stopInfo: stop, busses: res.results });
+      this.bussesDue = res.results;
+
+      for (var i = 0; i < 5; i++) {
+        this.bussesDueFive[i] = this.bussesDue[i];
+      }
+
+
+      // this.navCtrl.push(TimetablesPage, { stopInfo: stop, busses: res.results });
     })
   }
 
-  
+
 
   //function that calls the navigator service and provides the bus stop info
   navigate(stop: BusStop) {

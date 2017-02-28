@@ -32,7 +32,7 @@ export class HomePage {
       An array of user specified length is used to show the appropriate number of busstops in the view.
   */
   computeDistance() {
-    SpinnerDialog.show("Finding closest Busstops...", "Calculating...");
+    SpinnerDialog.show("Retrieving devices coordinates...", "Calculating...");
 
     Geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((resp) => {
       this.ownLat = resp.coords.latitude;
@@ -43,6 +43,9 @@ export class HomePage {
 
       this.times.getBusStopInfo().subscribe(
         res => {
+
+          SpinnerDialog.hide();
+          SpinnerDialog.show("Finding closest Busstops...", "Calculating...");
 
           //storing all busstops in an array
           for (var i = 0; i < res.results.length; i++) {
@@ -64,7 +67,7 @@ export class HomePage {
           SpinnerDialog.hide();
 
           //opening the page that displays the closest busstops 
-          this.navCtrl.push(SearchResultsPage, { stops: this.busStopArray });
+          this.navCtrl.push(SearchResultsPage, { busStopArray: this.busStopArray });
 
         });
 
@@ -77,7 +80,7 @@ export class HomePage {
   //It searches in the fullname property of all bus stops for the user query and 
   //shows a list of all found bus stops or an alert that no matching stop could be found
   searchByName() {
-    if(this.stopName.trim().length < 1){
+    if (this.stopName.trim().length < 1) {
       return;
     }
 

@@ -8,31 +8,48 @@
 
 
 <ion-content style="background-color: lightgray" padding>
-  
-  <ion-list *ngFor="let stop of stops">
-    <ion-card >
-      <ion-grid>
+  <ion-slides pager (ionSlideDidChange)="showTimetable()">
+    <ion-slide *ngFor="let stop of busStopArray">
+      <ion-card>
+        <ion-grid>
 
-        <ion-row id="card_header" center>
-          <ion-col>Stop ID</ion-col>
-          <ion-col>Stop Name</ion-col>
-          <ion-col item-right>Distance</ion-col>
-        </ion-row>
+          <ion-row id="card_header" center>
+            <ion-col>Stop ID</ion-col>
+            <ion-col>Stop Name</ion-col>
+            <ion-col item-right>Distance</ion-col>
+          </ion-row>
 
-        <ion-row center>
-          <ion-col>{{stop.stopid}}</ion-col>
-          <ion-col>{{stop.name}}</ion-col>
-          <ion-col item-right>{{stop.distance.toFixed(2)}} km</ion-col>
-        </ion-row>
-        <ion-row *ngFor="let operator of stop.operators">
-          <ion-col>Routes: {{operator.routes}}</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col><button ion-button small outline ion-text color="dark" (click)="showTimetable(stop)">Timetable</button></ion-col>
-          <ion-col id="navButton"><button ion-button small outline ion-text color="dark" (click)="navigate(stop)">Navigate</button></ion-col>
-        </ion-row>
+          <ion-row center>
+            <ion-col>{{stop.stopid}}</ion-col>
+            <ion-col>{{stop.name}}</ion-col>
+            <ion-col item-right>{{stop.distance.toFixed(2)}} km</ion-col>
+          </ion-row>
+          <ion-row *ngFor="let operator of stop.operators">
+            <ion-col>Routes: {{operator.routes}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <!--<ion-col><button ion-button small outline ion-text color="dark" (click)="showTimetable(stop)">Timetable</button></ion-col>-->
+            <ion-col id="navButton"><button ion-button small outline ion-text color="dark" (click)="navigate(stop)">Navigate</button></ion-col>
+          </ion-row>
 
-      </ion-grid>
-    </ion-card>
-  </ion-list>
+        </ion-grid>
+
+        <ion-grid>
+
+          <ion-row center style="text-decoration: underline">
+            <ion-col>Route</ion-col>
+            <ion-col>Destination</ion-col>
+            <ion-col style="text-align: right">Due</ion-col>
+          </ion-row>
+
+          <ion-row center *ngFor="let bus of bussesDueFive">
+            <ion-col>{{bus.route}}</ion-col>
+            <ion-col>{{bus.destination}}</ion-col>
+            <ion-col style="text-align: right">{{bus.duetime}}</ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
