@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, Slides } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
 import { Times } from '../../providers/times';
@@ -14,6 +14,8 @@ import { Geolocation, SpinnerDialog } from 'ionic-native';
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  @ViewChild(Slides) slides: Slides;
 
   numOfStops: number = 5;
   stopName: string = "";
@@ -32,9 +34,9 @@ export class HomePage {
       An array of user specified length is used to show the appropriate number of busstops in the view.
   */
   computeDistance() {
-    SpinnerDialog.show("Retrieving devices coordinates...", "Calculating...");
+    SpinnerDialog.show("Retrieving device coordinates...", "Calculating...");
 
-    Geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((resp) => {
+    Geolocation.getCurrentPosition({ enableHighAccuracy: true, maximumAge: 10, timeout: 10000 }).then((resp) => {
       this.ownLat = resp.coords.latitude;
       this.ownLon = resp.coords.longitude;
 
@@ -43,10 +45,8 @@ export class HomePage {
 
       this.times.getBusStopInfo().subscribe(
         res => {
-
           SpinnerDialog.hide();
           SpinnerDialog.show("Finding closest Busstops...", "Calculating...");
-
           //storing all busstops in an array
           for (var i = 0; i < res.results.length; i++) {
             tempArray.push(new BusStop(res.results[i].latitude, res.results[i].longitude,
@@ -67,11 +67,12 @@ export class HomePage {
           SpinnerDialog.hide();
 
           //opening the page that displays the closest busstops 
-          this.navCtrl.push(SearchResultsPage, { busStopArray: this.busStopArray });
+          this.navCtrl.push(SearchResultsPage, { stops: this.busStopArray });
 
         });
 
     }).catch((error) => {
+      alert("Couldn't retrieve devices location!");
       console.log('Error getting location', error);
     });
   }

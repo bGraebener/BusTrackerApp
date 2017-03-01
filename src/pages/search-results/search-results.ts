@@ -23,8 +23,7 @@ export class SearchResultsPage {
   }
 
   ionViewDidLoad() {
-    let current = this.slides.getActiveIndex();
-    console.log(current);
+    
   }
 
   showTimeTable(){
@@ -42,8 +41,7 @@ export class SearchResultsPage {
         this.bussesDueFive[i] = this.bussesDue[i];
       }
 
-
-      // this.navCtrl.push(TimetablesPage, { stopInfo: stop, busses: res.results });
+      this.navCtrl.push(TimetablesPage, { stopInfo: stop, busses: res.results });
     })
   }
 
