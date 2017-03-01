@@ -20,8 +20,8 @@ export class HomePage {
   numOfStops: number = 5;
   stopName: string = "";
   busStopArray: BusStop[] = [];
-  ownLat: number;
-  ownLon: number;
+  // ownLat: number;
+  // ownLon: number;
 
   constructor(public navCtrl: NavController, private times: Times) {
   }
@@ -34,24 +34,23 @@ export class HomePage {
       An array of user specified length is used to show the appropriate number of busstops in the view.
   */
   computeDistance() {
-    SpinnerDialog.show("Retrieving device coordinates...", "Calculating...");
+    SpinnerDialog.show("Finding closest Busstops...", "Calculating...");
 
-    Geolocation.getCurrentPosition({ enableHighAccuracy: true, maximumAge: 10, timeout: 10000 }).then((resp) => {
-      this.ownLat = resp.coords.latitude;
-      this.ownLon = resp.coords.longitude;
+    Geolocation.getCurrentPosition({ enableHighAccuracy: false }).then((resp) => {
+      let ownLat = resp.coords.latitude;
+      let ownLon = resp.coords.longitude;
 
       let tempArray: BusStop[] = [];
       this.busStopArray = [];
 
       this.times.getBusStopInfo().subscribe(
-        res => {
-          SpinnerDialog.hide();
-          SpinnerDialog.show("Finding closest Busstops...", "Calculating...");
+        res => {      
+         
           //storing all busstops in an array
           for (var i = 0; i < res.results.length; i++) {
             tempArray.push(new BusStop(res.results[i].latitude, res.results[i].longitude,
               res.results[i].stopid, res.results[i].fullname, res.results[i].operators));
-            tempArray[i].calculateDistanceToDevice(this.ownLat, this.ownLon);
+            tempArray[i].calculateDistanceToDevice(ownLat, ownLon);
 
           }
 
@@ -89,8 +88,8 @@ export class HomePage {
     this.busStopArray = [];
 
     Geolocation.getCurrentPosition().then(res => {
-      this.ownLat = res.coords.latitude;
-      this.ownLon = res.coords.longitude;
+      let ownLat = res.coords.latitude;
+      let ownLon = res.coords.longitude;
 
       this.times.getBusStopInfo().subscribe((res) => {
 
@@ -104,7 +103,7 @@ export class HomePage {
 
         //calculating distances to all found stops
         for (var i = 0; i < this.busStopArray.length; i++) {
-          this.busStopArray[i].calculateDistanceToDevice(this.ownLat, this.ownLon);
+          this.busStopArray[i].calculateDistanceToDevice(ownLat, ownLon);
         }
 
         this.busStopArray.sort((a, b) => a.distance - b.distance);
