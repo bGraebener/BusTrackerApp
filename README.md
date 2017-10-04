@@ -5,11 +5,6 @@ Find bus stops in your area and display the bus routes and the bus times.
 
 Application Title: Bus Tracker
 
-Student: Bastian Graebener - G00340600
-
-Application ID: 84f1369f
-
-
 Installation:
 
 1. Clone the repository
